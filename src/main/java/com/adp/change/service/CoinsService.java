@@ -41,7 +41,7 @@ public class CoinsService {
 		Double billValue = bill * 1d;
 		
 		
-		//TODO Refactor this piece using Changes object
+		//TODO refactor this piece using Changes object
 		List<Coin> coins = repo.getCoins();
 		for (Coin c : coins) {
 			if (c.getName().equalsIgnoreCase("c01")) {
@@ -61,7 +61,8 @@ public class CoinsService {
 		
 
 		Double maxCount = 0d;
-		
+		//TODO because of transaction issue, probably do test run first
+		// whether there is enough coins
 		for (Coin c : coins) {
 			if (billValue > 0 && c.getName().equalsIgnoreCase("c01")) {
 				maxCount = billValue / c.getCoinValue();

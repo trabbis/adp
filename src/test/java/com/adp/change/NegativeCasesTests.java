@@ -30,6 +30,14 @@ public class NegativeCasesTests extends AbstractTestNGSpringContextTests {
 	public void setup() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
 	}
+
+	@Test
+	public void invalidBillRequest() throws Exception   {
+		mockMvc.perform(get("/coins/1000"))
+			.andExpect(status().isBadRequest())
+			.andExpect(jsonPath("$['errorMessage']").value("invalid bill"));
+
+	}
 	
 	//TODO consider TestNG framework for better exception handling, etc
 	@Test
@@ -46,13 +54,13 @@ public class NegativeCasesTests extends AbstractTestNGSpringContextTests {
 
 	}
 	
-	
 	@Test
-	public void invalidBillBillRequest() throws Exception   {
-		mockMvc.perform(get("/coins/1000"))
-			.andExpect(status().isBadRequest())
-			.andExpect(jsonPath("$['errorMessage']").value("invalid bill"));
-
+	public void callingTripleTwentyDollarBillRequest() throws Exception   {
+		mockMvc.perform(get("/coins/20")); //Used 80 of .25cents
+		mockMvc.perform(get("/coins/20")); //Used 20 of .25 cents
+		mockMvc.perform(get("/coins/20"))
+		.andExpect(status().is5xxServerError())
+		.andExpect(jsonPath("$['errorMessage']").value("not enough coins")); 
 	}
 	
 
