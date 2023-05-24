@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest
-public class CompositeTests extends AbstractTestNGSpringContextTests {
+public class CompositeTests {
 	
 	@Autowired
 	private WebApplicationContext webApplicationContext;

@@ -18,7 +18,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.adp.change.exceptions.InvalidBillException;
 
 @SpringBootTest
-public class NegativeCasesTests extends AbstractTestNGSpringContextTests {
+public class NegativeCasesTests {
 
 	@Autowired
 	private WebApplicationContext webApplicationContext;
