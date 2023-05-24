@@ -1,12 +1,12 @@
 package com.adp.change.model;
 
-public class Changes {
+public class CoinChanges {
 	private Coin c25Cents;
 	private Coin c10Cents;
 	private Coin c05Cents;
 	private Coin c01Cents;
 
-	public Changes() {
+	public CoinChanges() {
 		c25Cents = new Coin("c25", 0, 0.25d);
 		c10Cents = new Coin("c10", 0, 0.10d);
 		c05Cents = new Coin("c05", 0, 0.05d);
