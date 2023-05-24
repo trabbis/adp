@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.adp.change.exceptions.InvalidBillException;
 import com.adp.change.exceptions.NotEnoughCoinsException;
 import com.adp.change.model.Changes;
-import com.adp.change.model.Coins;
+import com.adp.change.model.Coin;
 import com.adp.change.repo.CoinsRepo;
 
 @Service
@@ -18,7 +18,7 @@ public class CoinsService {
 	@Autowired
 	private CoinsRepo repo;
 	
-	public Changes checkingAvailableConins(Integer bill) throws InvalidBillException {
+	public Changes checkingAvailableConins(Integer bill) throws InvalidBillException, NotEnoughCoinsException {
 		
 		List<Integer> validBill = Arrays.asList(1,2,5,10, 20,50,100);
 		//Optional<Integer>
@@ -41,8 +41,9 @@ public class CoinsService {
 		Double billValue = bill * 1d;
 		
 		
-		List<Coins> coins = repo.getCoins();
-		for (Coins c : coins) {
+		//TODO Refactor this piece using Changes object
+		List<Coin> coins = repo.getCoins();
+		for (Coin c : coins) {
 			if (c.getName().equalsIgnoreCase("c01")) {
 				c01Count = c.getCount();
 				c01CurrentValue = c.getTotalValue();
@@ -61,7 +62,7 @@ public class CoinsService {
 
 		Double maxCount = 0d;
 		
-		for (Coins c : coins) {
+		for (Coin c : coins) {
 			if (billValue > 0 && c.getName().equalsIgnoreCase("c01")) {
 				maxCount = billValue / c.getCoinValue();
 				if (maxCount > c01Count) {

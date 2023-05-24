@@ -1,6 +1,6 @@
 package com.adp.change.model;
 
-public class Coins {
+public class Coin {
 	private String name;
 	private Integer count;
 	private Double coinValue;
@@ -26,7 +26,7 @@ public class Coins {
 		return getCount() * getCoinValue();
 	}
 
-	public Coins(String n, Integer b, Double v) {
+	public Coin(String n, Integer b, Double v) {
 		this.name = n;
 		this.count = b;
 		this.coinValue = v;
