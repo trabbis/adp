@@ -22,7 +22,7 @@ public class ChangeController {
 	@GetMapping(value="/coins/{bill}")
 	public ResponseEntity<CoinChanges> changeRequest(@PathVariable Integer bill) throws Exception {
 		
-		CoinChanges changes = service.checkingAvailableConins(bill);
+		CoinChanges changes = service.leastAmountOfCoinsChange(bill);
 		
 		return new ResponseEntity<>(changes, HttpStatus.OK);
 	}

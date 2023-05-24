@@ -31,14 +31,20 @@ public class CoinsService {
 		}
 		
 	}
-	public CoinChanges checkingAvailableConins(Integer bill) throws InvalidBillException, NotEnoughCoinsException {
+	
+
+	//TODO
+	public CoinChanges mostAmountOfCoinsChange(Integer bill) throws InvalidBillException, NotEnoughCoinsException {
+		return null;
+	}
+	
+	public CoinChanges leastAmountOfCoinsChange(Integer bill) throws InvalidBillException, NotEnoughCoinsException {
 		
 		List<Integer> validBill = Arrays.asList(1,2,5,10, 20,50,100);
 		//Optional<Integer>
 		if (!validBill.contains(bill)) {
 			throw new InvalidBillException("invalid bill");
 		}
-		
 		
 		Double c01CurrentValue = 0d;
 		Double c05CurrentValue = 0d;
@@ -75,7 +81,7 @@ public class CoinsService {
 
 		Double maxCount = 0d;
 		//TODO because of transaction issue, probably do test run first
-		// whether there is enough coins
+		// to make sure if there is enough coins
 		for (Coin c : coins) {
 			if (billValue > 0 && c.getCode().equalsIgnoreCase("c01")) {
 				maxCount = billValue / c.getCoinValue();
