@@ -27,9 +27,8 @@ public class ChangeController {
 		return new ResponseEntity<>(changes, HttpStatus.OK);
 	}
 
-	@PutMapping(value="/coins2/{bill}")
-	public ResponseEntity<Coin> updateCoin(@PathVariable Integer bill,
-			@RequestBody Coin newCoin) throws Exception {
+	@PutMapping(value="/coins")
+	public ResponseEntity<Coin> updateCoin(@RequestBody Coin newCoin) throws Exception {
 		
 		Coin coin = service.updateCoin(newCoin);
 		
