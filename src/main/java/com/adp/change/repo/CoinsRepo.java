@@ -36,7 +36,7 @@ public class CoinsRepo {
 				break;
 			}
 		}
-		return Optional.of(coin);
+		return Optional.empty();
 		
 	}
 	public Coin updateCoin(Coin newCoin) {

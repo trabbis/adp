@@ -24,6 +24,19 @@ public class ControllerExceptionHandler {
 		return error;
 	}
 	
+	@ExceptionHandler(CoinNotExistException.class)
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	public @ResponseBody ExceptionResponse coinNotExists(final CoinNotExistException exception,
+			final HttpServletRequest request) {
+
+		ExceptionResponse error = new ExceptionResponse();
+		error.setErrorMessage(exception.getMessage());
+		error.callerURL(request.getRequestURI());
+
+		return error;
+	}
+
+	
 	@ExceptionHandler(NotEnoughCoinsException.class)
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 	public @ResponseBody ExceptionResponse notEnoughCoins(final NotEnoughCoinsException exception,

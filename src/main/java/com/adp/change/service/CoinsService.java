@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.adp.change.exceptions.CoinNotExistException;
 import com.adp.change.exceptions.InvalidBillException;
 import com.adp.change.exceptions.NotEnoughCoinsException;
 import com.adp.change.model.Coin;
@@ -26,10 +27,8 @@ public class CoinsService {
 			Coin updateCoin = repo.updateCoin(coin);
 			return updateCoin;
 		} else {
-			throw new InvalidBillException("not exisit");
+			throw new CoinNotExistException(coin.getCode() + " not exisit");
 		}
-		
-		
 		
 	}
 	public CoinChanges checkingAvailableConins(Integer bill) throws InvalidBillException, NotEnoughCoinsException {
