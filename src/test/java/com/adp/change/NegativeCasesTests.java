@@ -1,5 +1,7 @@
 package com.adp.change;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -13,9 +15,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.adp.change.exceptions.InvalidBillException;
+
 @SpringBootTest
-public class CompositeTests extends AbstractTestNGSpringContextTests {
-	
+public class NegativeCasesTests extends AbstractTestNGSpringContextTests {
+
 	@Autowired
 	private WebApplicationContext webApplicationContext;
 
@@ -29,11 +33,18 @@ public class CompositeTests extends AbstractTestNGSpringContextTests {
 	
 	@Test
 	public void callingTwiceTwentyDollarBillRequest() throws Exception   {
-		mockMvc.perform(get("/coins/20")); //Used 80 of .25cents
-		mockMvc.perform(get("/coins/20"))
-		.andExpect(status().isOk())
-		.andExpect(jsonPath("$['c25Cents']['count']").value("20")) //So only 20 left
-		.andExpect(jsonPath("$['c25Cents']['totalValue']").value("5.0"));
-	}
+//        Exception exception = assertThrows(
+//        		InvalidBillException.class,  
+//        		() -> mockMvc.perform(get("/coins/100")));
+//        
+//        assertEquals("not enough coins", exception.getMessage());
+		mockMvc.perform(get("/coins/100"))
+		.andExpect(status().is5xxServerError())
+		.andExpect(jsonPath("$['errorMessage']").value("not enough coins1"));
 
+	}
+	
+	
+
+	
 }
