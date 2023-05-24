@@ -1,7 +1,7 @@
 package com.adp.change.model;
 
 public class Coin {
-	private String name;
+	private String code;
 	private Integer count;
 	private Double coinValue;
 	
@@ -27,21 +27,21 @@ public class Coin {
 	}
 
 	public Coin(String n, Integer b, Double v) {
-		this.name = n;
+		this.code = n;
 		this.count = b;
 		this.coinValue = v;
 	}
 	
-	public String getName() {
-		return name;
+	public String getCode() {
+		return code;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setCode(String name) {
+		this.code = name;
 	}
 
 	@Override
 	public String toString() {
-		return "Coins [name=" + name + ", count=" + count + ", coinValue=" + coinValue + "]";
+		return "Coins [name=" + code + ", count=" + count + ", coinValue=" + coinValue + "]";
 	}
 	
 	

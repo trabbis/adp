@@ -2,14 +2,15 @@ package com.adp.change.service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.adp.change.exceptions.InvalidBillException;
 import com.adp.change.exceptions.NotEnoughCoinsException;
-import com.adp.change.model.CoinChanges;
 import com.adp.change.model.Coin;
+import com.adp.change.model.CoinChanges;
 import com.adp.change.repo.CoinsRepo;
 
 @Service
@@ -18,6 +19,19 @@ public class CoinsService {
 	@Autowired
 	private CoinsRepo repo;
 	
+	public Coin updateCoin(Coin coin) {
+		Optional<Coin> currentCoin = repo.getCoin(coin.getCode());
+		
+		if (currentCoin.isPresent()) {
+			Coin updateCoin = repo.updateCoin(coin);
+			return updateCoin;
+		} else {
+			throw new InvalidBillException("not exisit");
+		}
+		
+		
+		
+	}
 	public CoinChanges checkingAvailableConins(Integer bill) throws InvalidBillException, NotEnoughCoinsException {
 		
 		List<Integer> validBill = Arrays.asList(1,2,5,10, 20,50,100);
@@ -44,16 +58,16 @@ public class CoinsService {
 		//TODO refactor this piece using Changes object
 		List<Coin> coins = repo.getCoins();
 		for (Coin c : coins) {
-			if (c.getName().equalsIgnoreCase("c01")) {
+			if (c.getCode().equalsIgnoreCase("c01")) {
 				c01Count = c.getCount();
 				c01CurrentValue = c.getTotalValue();
-			} else if (c.getName().equalsIgnoreCase("c05")) {
+			} else if (c.getCode().equalsIgnoreCase("c05")) {
 				c05Count = c.getCount();
 				c05CurrentValue = c.getTotalValue();
-			} else if (c.getName().equalsIgnoreCase("c10")) {
+			} else if (c.getCode().equalsIgnoreCase("c10")) {
 				c10Count = c.getCount();
 				c10CurrentValue = c.getTotalValue();
-			} else if (c.getName().equalsIgnoreCase("c25")) {
+			} else if (c.getCode().equalsIgnoreCase("c25")) {
 				c25CurrentValue = c.getTotalValue();
 				c25Count = c.getCount();
 			}
@@ -64,7 +78,7 @@ public class CoinsService {
 		//TODO because of transaction issue, probably do test run first
 		// whether there is enough coins
 		for (Coin c : coins) {
-			if (billValue > 0 && c.getName().equalsIgnoreCase("c01")) {
+			if (billValue > 0 && c.getCode().equalsIgnoreCase("c01")) {
 				maxCount = billValue / c.getCoinValue();
 				if (maxCount > c01Count) {
 					changes.getC01Cents().setCount(c01Count);
@@ -75,7 +89,7 @@ public class CoinsService {
 					c.setCount(c.getCount() - maxCount.intValue());
 					billValue = billValue - maxCount * c.getCoinValue();
 				}
-			} else if (billValue > 0 && c.getName().equalsIgnoreCase("c05")) {
+			} else if (billValue > 0 && c.getCode().equalsIgnoreCase("c05")) {
 				maxCount = billValue / c.getCoinValue();
 				if (maxCount > c05Count) {
 					changes.getC05Cents().setCount(c05Count);
@@ -87,7 +101,7 @@ public class CoinsService {
 					billValue = billValue - maxCount * c.getCoinValue();
 				}
 
-			} else if (billValue > 0 && c.getName().equalsIgnoreCase("c10")) {
+			} else if (billValue > 0 && c.getCode().equalsIgnoreCase("c10")) {
 				maxCount = billValue / c.getCoinValue();
 				if (maxCount > c10Count) {
 					changes.getC10Cents().setCount(c10Count);
@@ -98,7 +112,7 @@ public class CoinsService {
 					c.setCount(c.getCount() - maxCount.intValue());
 					billValue = billValue - maxCount * c.getCoinValue();
 				}
-			} else if (billValue > 0 && c.getName().equalsIgnoreCase("c25")) {
+			} else if (billValue > 0 && c.getCode().equalsIgnoreCase("c25")) {
 				if (billValue > 0 && c25CurrentValue > 0d) {
 					maxCount = billValue / c.getCoinValue();
 					if (maxCount > c25Count) {

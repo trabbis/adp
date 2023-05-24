@@ -5,8 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.adp.change.model.Coin;
 import com.adp.change.model.CoinChanges;
 import com.adp.change.service.CoinsService;
 
@@ -24,5 +27,13 @@ public class ChangeController {
 		return new ResponseEntity<>(changes, HttpStatus.OK);
 	}
 
+	@PutMapping(value="/coins2/{bill}")
+	public ResponseEntity<Coin> updateCoin(@PathVariable Integer bill,
+			@RequestBody Coin newCoin) throws Exception {
+		
+		Coin coin = service.updateCoin(newCoin);
+		
+		return new ResponseEntity<>(coin, HttpStatus.OK);
+	}
 	
 }
