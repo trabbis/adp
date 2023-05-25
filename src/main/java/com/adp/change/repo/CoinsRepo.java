@@ -29,14 +29,14 @@ public class CoinsRepo {
 	}
 
 	public Optional<Coin> getCoin(String code) {
-		Coin coin = null;
+		Optional<Coin> coin = Optional.empty();;
 		for(Coin c: lists) {
 			if (c.getCode().equalsIgnoreCase(code)) {
-				coin = c;
+				coin = Optional.of(c);
 				break;
 			}
 		}
-		return Optional.empty();
+		return coin;
 		
 	}
 	public Coin updateCoin(Coin newCoin) {
